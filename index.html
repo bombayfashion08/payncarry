@@ -158,18 +158,8 @@
       transition:.2s ease;
     }
     .product:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
-    .product-img{
-  height:230px;
-  background:#eef6ff;
-  position:relative;
-  overflow:hidden;
-}
-
-.product-img img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+    .product-img{height:230px;background:#eef6ff;position:relative;overflow:hidden}
+    .product-img img{width:100%;height:100%;object-fit:cover}
     .product-tag{
       position:absolute;top:12px;left:12px;background:#fff;color:var(--blue);border-radius:999px;
       padding:8px 11px;font-size:11px;font-weight:900;box-shadow:0 8px 18px rgba(0,0,0,.12)
@@ -252,6 +242,61 @@
       .slider{min-height:350px}
       .mini-banner{align-items:flex-start;flex-direction:column}
     }
+
+    .category-slider-section{padding:24px 0 10px}
+    .cat-block{
+      margin:26px 0;background:rgba(255,255,255,.70);border:1px solid var(--border);
+      border-radius:34px;padding:18px;box-shadow:0 12px 38px rgba(15,92,194,.06)
+    }
+    .cat-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px}
+    .cat-title h3{margin:0;font-size:26px;letter-spacing:-.8px;color:var(--blue)}
+    .cat-title p{margin:5px 0 0;color:var(--muted);font-size:14px;font-weight:650}
+    .slide-controls{display:flex;gap:8px;flex:0 0 auto}
+    .slide-controls button{
+      width:44px;height:44px;border:1px solid var(--border);border-radius:16px;background:#fff;
+      color:var(--blue);font-size:20px;font-weight:950;cursor:pointer;box-shadow:0 8px 22px rgba(15,92,194,.08)
+    }
+    .product-slider{
+      display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;
+      padding:4px 4px 12px;scrollbar-width:none
+    }
+    .product-slider::-webkit-scrollbar{display:none}
+    .product-slider .product{min-width:282px;max-width:282px;scroll-snap-align:start}
+    .quick-search-note{
+      display:none;background:#fff3ed;color:#c93d11;border:1px solid #ffd6c4;border-radius:18px;
+      padding:12px 14px;margin-bottom:14px;font-weight:800
+    }
+    .quick-search-note.show{display:block}
+    .img-error{
+      height:100%;display:grid;place-items:center;text-align:center;color:#64748b;font-weight:900;
+      padding:18px;background:#eef6ff
+    }
+    @media(max-width:760px){
+      .cat-block{padding:14px;border-radius:28px}
+      .cat-title h3{font-size:22px}
+      .product-slider .product{min-width:86%;max-width:86%}
+      .slide-controls button{width:40px;height:40px}
+    }
+
+
+    /* Only sliding sections by default */
+    #productGrid{
+      display:none;
+    }
+    #productGrid.search-active{
+      display:grid;
+      margin-bottom:24px;
+    }
+    .search-result-title{
+      display:none;
+      margin:0 0 14px;
+      font-size:22px;
+      color:var(--blue);
+      font-weight:950;
+      letter-spacing:-.4px;
+    }
+    .search-result-title.show{display:block}
+
   </style>
 </head>
 <body>
@@ -276,6 +321,7 @@
       </nav>
       <div class="nav-actions">
         <button class="whatsapp-btn" onclick="openWhatsApp()">Order on WhatsApp</button>
+        <button class="icon-btn" onclick="focusSearch()" aria-label="Search">🔍</button>
         <button class="icon-btn" onclick="toggleCart()" aria-label="Cart">🛒 <span class="cart-count" id="cartCount">0</span></button>
         <button class="menu-btn" onclick="toggleMenu()" aria-label="Menu">☰</button>
       </div>
@@ -330,13 +376,41 @@
 
         <div class="toolbar">
           <input id="searchInput" class="search" placeholder="Search drinks, candy, sandwich pie..." oninput="renderProducts()">
+          <button class="primary-btn" onclick="focusSearch()">Search</button>
+          <div id="searchNote" class="quick-search-note">Type product name. Results will show above sliders.</div>
           <button class="chip active" onclick="setFilter('all', this)">All</button>
           <button class="chip" onclick="setFilter('drink', this)">Drinks</button>
           <button class="chip" onclick="setFilter('candy', this)">Candy</button>
           <button class="chip" onclick="setFilter('snack', this)">Snack</button>
         </div>
 
+        <h3 class="search-result-title" id="searchResultTitle">Search Results</h3>
         <div class="products" id="productGrid"></div>
+
+        <div class="category-slider-section" id="categorySliders">
+          <div class="cat-block">
+            <div class="cat-head">
+              <div class="cat-title"><h3>Drink Section</h3><p>Drinks and energy cans.</p></div>
+              <div class="slide-controls"><button onclick="slideRow('drinkSlider',-1)">‹</button><button onclick="slideRow('drinkSlider',1)">›</button></div>
+            </div>
+            <div class="product-slider" id="drinkSlider"></div>
+          </div>
+          <div class="cat-block">
+            <div class="cat-head">
+              <div class="cat-title"><h3>Candy Section</h3><p>Candy jars, popping candy and toy candy.</p></div>
+              <div class="slide-controls"><button onclick="slideRow('candySlider',-1)">‹</button><button onclick="slideRow('candySlider',1)">›</button></div>
+            </div>
+            <div class="product-slider" id="candySlider"></div>
+          </div>
+          <div class="cat-block">
+            <div class="cat-head">
+              <div class="cat-title"><h3>Snack Section</h3><p>Snacks and packed food cartons.</p></div>
+              <div class="slide-controls"><button onclick="slideRow('snackSlider',-1)">‹</button><button onclick="slideRow('snackSlider',1)">›</button></div>
+            </div>
+            <div class="product-slider" id="snackSlider"></div>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -440,6 +514,71 @@
     let cart = JSON.parse(localStorage.getItem("payncarry_cart") || "[]");
 
     const products = [
+
+      {
+        id:"frutella-orange",
+        name:"Frutella Orange Flavor",
+        category:"candy",
+        image:"assets/frutella-orange.jpeg",
+        price:350,
+        details:"Per carton: 8 jars • 400 pieces in 1 jar • Orange flavor chewy candy",
+        tag:"Candy Jar"
+      },
+      {
+        id:"frutella-strawberry",
+        name:"Frutella Strawberry Flavor",
+        category:"candy",
+        image:"assets/frutella-strawberry.jpeg",
+        price:350,
+        details:"Per carton: 8 jars • 400 pieces in 1 jar • Strawberry flavor chewy candy",
+        tag:"Candy Jar"
+      },
+      {
+        id:"frutella-grape",
+        name:"Frutella Grape Flavor",
+        category:"candy",
+        image:"assets/frutella-grape.jpeg",
+        price:350,
+        details:"Per carton: 8 jars • 400 pieces in 1 jar • Grape flavor chewy candy",
+        tag:"Candy Jar"
+      },
+      {
+        id:"redbull-plus",
+        name:"Red Bull Plus",
+        category:"drink",
+        image:"assets/redbull-plus.jpeg",
+        price:2000,
+        details:"Per carton: 24 cans • 250 ml per can • High Vitamin Zero Sugar energy drink",
+        tag:"Energy Drink"
+      },
+      {
+        id:"redbull-kratingdaeng",
+        name:"Red Bull Kratingdaeng",
+        category:"drink",
+        image:"assets/redbull-kratingdaeng.jpeg",
+        price:1400,
+        details:"Per carton: 24 cans • 250 ml per can • Imported energy drink",
+        tag:"Energy Drink"
+      },
+      {
+        id:"pringles-imported",
+        name:"Pringles All Flavours Imported",
+        category:"snack",
+        image:"assets/pringles-imported.jpeg",
+        price:1260,
+        details:"Per carton: 14 pieces • 158 gm each • Imported Pringles assorted flavours",
+        tag:"Imported Snack"
+      },
+      {
+        id:"wild-power",
+        name:"Wild Power Energy Drink",
+        category:"drink",
+        image:"assets/wild-power.jpeg",
+        price:1000,
+        details:"Per carton: 24 cans • 250 ml per can • Energy drink carton",
+        tag:"Energy Drink"
+      },
+
       {
         id:"hello-baba",
         name:"Hello Baba Drinks",
@@ -498,7 +637,7 @@
         id:"paint-roller",
         name:"Paint Roller Shape Popping Candy",
         category:"candy",
-        image:"assets/paint-roller-product.jpeg",
+        image:"assets/paint-roller-popping-candy.jpeg",
         price:2600,
         details:"Per carton: 24 boxes • 30 pieces in one box • 8 gm per piece",
         tag:"Popping Candy"
@@ -507,7 +646,7 @@
         id:"nik-candy",
         name:"Nik Candy",
         category:"candy",
-        image:"assets/nik-candy-product.jpeg",
+        image:"assets/nik-candy.jpeg",
         price:2600,
         details:"Per carton: 24 boxes • 30 pieces in one box • 3 gm per piece",
         tag:"Nik Candy"
@@ -516,7 +655,7 @@
         id:"fresh-coc",
         name:"Fresh Coconut Water With Pulp",
         category:"drink",
-        image:"assets/fresh-coc-product.jpeg",
+        image:"assets/fresh-coco.jpeg",
         price:1000,
         details:"Per carton: 24 pieces • 250 ml each • Coconut water with pulp",
         tag:"Drink Carton"
@@ -525,76 +664,11 @@
         id:"gummy-bursting",
         name:"Gummy Candy 3D Bursting Ball",
         category:"candy",
-        image:"assets/gummy-candy-product.jpeg",
+        image:"assets/gummy-bursting-ball.jpeg",
         price:2400,
         details:"Per carton: 24 boxes • 100 pieces in one box • 2 gm per piece",
         tag:"Gummy Candy"
-      } 
-    ,
-{
-  id:"frutella-orange",
-  name:"Frutella Orange Flavor",
-  category:"candy",
-  image:"assets/frutella-orange.jpeg",
-  price:2800,
-  details:"Per carton: 8 jars • 400 pieces in 1 jar • Orange flavor chewy candy",
-  tag:"Candy Jar"
-},
-{
-  id:"frutella-strawberry",
-  name:"Frutella Strawberry Flavor",
-  category:"candy",
-  image:"assets/frutella-strawberry.jpeg",
-  price:2800,
-  details:"Per carton: 8 jars • 400 pieces in 1 jar • Strawberry flavor chewy candy",
-  tag:"Candy Jar"
-},
-{
-  id:"frutella-grape",
-  name:"Frutella Grape Flavor",
-  category:"candy",
-  image:"assets/frutella-grape.jpeg",
-  price:2800,
-  details:"Per carton: 8 jars • 400 pieces in 1 jar • Grape flavor chewy candy",
-  tag:"Candy Jar"
-},
-{
-  id:"redbull-plus",
-  name:"Red Bull Plus",
-  category:"drink",
-  image:"assets/redbull-plus.jpeg",
-  price:2000,
-  details:"Per carton: 24 cans • 250 ml per can • High Vitamin Zero Sugar energy drink",
-  tag:"Energy Drink"
-}
-   ,
-{
-  id:"redbull-kratingdaeng",
-  name:"Red Bull Kratingdaeng",
-  category:"drink",
-  image:"assets/redbull-kratingdaeng.jpeg",
-  price:1400,
-  details:"Per carton: 24 cans • 250 ml per can • Imported energy drink",
-  tag:"Energy Drink"
-},
-{
-  id:"pringles-imported",
-  name:"Pringles All Flavours Imported",
-  category:"snack",
-  image:"assets/pringles-imported.jpeg",
-  price:1260,
-  details:"Per carton: 14 pieces • 158 gm each • Imported Pringles assorted flavours",
-  tag:"Imported Snack"
-},
-{
-  id:"wild-power",
-  name:"Wild Power Energy Drink",
-  category:"drink",
-  image:"assets/wild-power.jpeg",
-  price:1000,
-  details:"Per carton: 24 cans • 250 ml per can • Energy drink carton",
-  tag:"Energy Drink"
-} 
+      }
     ];
 
     function money(n){ return "₹" + n.toLocaleString("en-IN"); }
@@ -603,21 +677,40 @@
       activeFilter = filter;
       document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
       el.classList.add("active");
-      renderProducts();
+      const map = {drink:"drinkSlider", candy:"candySlider", snack:"snackSlider"};
+      if(filter === "all"){
+        document.getElementById("categorySliders").scrollIntoView({behavior:"smooth", block:"start"});
+      }else{
+        document.getElementById(map[filter])?.closest(".cat-block")?.scrollIntoView({behavior:"smooth", block:"start"});
+      }
+      renderCategorySliders();
     }
 
     function renderProducts(){
       const grid = document.getElementById("productGrid");
+      const title = document.getElementById("searchResultTitle");
       const q = document.getElementById("searchInput").value.toLowerCase().trim();
-      const filtered = products.filter(p => 
-        (activeFilter === "all" || p.category === activeFilter) &&
-        (p.name.toLowerCase().includes(q) || p.details.toLowerCase().includes(q))
+
+      // No normal scrolling list. Default website shows only sliding sections.
+      if(!q){
+        grid.innerHTML = "";
+        grid.classList.remove("search-active");
+        if(title) title.classList.remove("show");
+        renderCategorySliders();
+        return;
+      }
+
+      const filtered = products.filter(p =>
+        (p.name.toLowerCase().includes(q) || p.details.toLowerCase().includes(q) || p.tag.toLowerCase().includes(q))
       );
+
+      grid.classList.add("search-active");
+      if(title) title.classList.add("show");
 
       grid.innerHTML = filtered.map(p => `
         <article class="product">
           <div class="product-img">
-            <img src="${p.image}" alt="${p.name}">
+            <img src="${p.image}" alt="${p.name}" onerror="this.parentElement.innerHTML='<div class=&quot;img-error&quot;>Image not found<br>'+this.getAttribute(&quot;src&quot;)+'</div>'">
             <span class="product-tag">${p.tag}</span>
           </div>
           <div class="product-body">
@@ -642,18 +735,21 @@
       if(!filtered.length){
         grid.innerHTML = `<div class="empty" style="grid-column:1/-1">No product found. Try another search.</div>`;
       }
+
+      renderCategorySliders();
     }
 
     function changePreviewQty(id, step){
-      const el = document.getElementById("qty-"+id);
+      const el = document.getElementById("qty-"+id) || document.getElementById("qty-slide-"+id);
+      if(!el) return;
       let val = parseInt(el.textContent || "1", 10);
       val = Math.max(1, val + step);
-      el.textContent = val;
+      document.querySelectorAll(`#qty-${id}, #qty-slide-${id}`).forEach(x=>x.textContent = val);
     }
 
     function addToCart(id){
       const p = products.find(x=>x.id===id);
-      const qtyEl = document.getElementById("qty-"+id);
+      const qtyEl = document.getElementById("qty-"+id) || document.getElementById("qty-slide-"+id);
       const qty = Math.max(1, parseInt(qtyEl?.textContent || "1", 10));
       const existing = cart.find(x=>x.id===id);
       if(existing) existing.qty += qty;
@@ -701,7 +797,7 @@
         subtotal += total;
         return `
           <div class="cart-item">
-            <img src="${p.image}" alt="${p.name}">
+            <img src="${p.image}" alt="${p.name}" onerror="this.parentElement.innerHTML='<div class=&quot;img-error&quot;>Image not found<br>'+this.getAttribute(&quot;src&quot;)+'</div>'">
             <div>
               <h4>${p.name}</h4>
               <small>${p.details}</small>
@@ -770,8 +866,67 @@
       slides[slideIndex].classList.add("active");
     }, 3500);
 
+
+    function productCard(p){
+      return `
+        <article class="product">
+          <div class="product-img">
+            <img src="${p.image}" alt="${p.name}" onerror="this.parentElement.innerHTML='<div class=&quot;img-error&quot;>Image not found<br>'+this.getAttribute(&quot;src&quot;)+'</div>'">
+            <span class="product-tag">${p.tag}</span>
+          </div>
+          <div class="product-body">
+            <h3>${p.name}</h3>
+            <div class="meta">${p.details}<br><b>Minimum buy: 1 carton</b></div>
+            <div class="price-row">
+              <div>
+                <small style="color:#64748b;font-weight:800">Per carton</small>
+                <div class="price">${money(p.price)}</div>
+              </div>
+              <div class="qty-row">
+                <button onclick="changePreviewQty('${p.id}', -1)">−</button>
+                <span id="qty-slide-${p.id}">1</span>
+                <button onclick="changePreviewQty('${p.id}', 1)">+</button>
+              </div>
+            </div>
+            <button class="cart-btn" onclick="addToCart('${p.id}')">Add Carton to Cart</button>
+          </div>
+        </article>`;
+    }
+
+    function renderCategorySliders(){
+      const q = (document.getElementById("searchInput")?.value || "").toLowerCase().trim();
+      const match = p => !q || p.name.toLowerCase().includes(q) || p.details.toLowerCase().includes(q) || p.tag.toLowerCase().includes(q);
+      const groups = {
+        drinkSlider: products.filter(p=>p.category==="drink" && match(p)),
+        candySlider: products.filter(p=>p.category==="candy" && match(p)),
+        snackSlider: products.filter(p=>p.category==="snack" && match(p))
+      };
+      Object.entries(groups).forEach(([id, arr])=>{
+        const row = document.getElementById(id);
+        if(row) row.innerHTML = arr.length ? arr.map(productCard).join("") : `<div class="empty" style="min-width:260px">No product found here.</div>`;
+      });
+    }
+
+    function slideRow(id, dir){
+      const row = document.getElementById(id);
+      if(!row) return;
+      row.scrollBy({left: dir * Math.min(330, row.clientWidth * .85), behavior:"smooth"});
+    }
+
+    function focusSearch(){
+      const input = document.getElementById("searchInput");
+      const note = document.getElementById("searchNote");
+      document.getElementById("products").scrollIntoView({behavior:"smooth", block:"start"});
+      setTimeout(()=>input.focus(), 450);
+      if(note){
+        note.classList.add("show");
+        setTimeout(()=>note.classList.remove("show"), 2300);
+      }
+    }
+
     document.getElementById("year").textContent = new Date().getFullYear();
     renderProducts();
+    renderCategorySliders();
     renderCart();
   </script>
 </body>
