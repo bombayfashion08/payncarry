@@ -527,7 +527,14 @@
       letter-spacing:-0.6px;
     }
 
-</style>
+
+    .product-tag.sale-lowest{
+      background:linear-gradient(135deg,#ff3b30,#ff8a00)!important;
+      color:#fff!important;
+      box-shadow:0 12px 28px rgba(255,90,31,.28)!important;
+      border:0!important;
+    }
+        </style>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -824,36 +831,36 @@
         name:"Hello Baba Drinks",
         category:"drink",
         image:"assets/hero-drinks-party.jpeg",
-        price:1000,
+        price:800,
         details:"Per carton: 24 pieces • 330 ml each • Bulk drink carton",
-        tag:"Drink Carton"
+        tag:"Sale Lowest Price"
       },
       {
         id:"sandwich-pie",
         name:"Sandwich Pie",
         category:"snack",
         image:"assets/sandwich-pie-banner.jpeg",
-        price:2400,
+        price:2000,
         details:"Per carton: 24 boxes • 30 pieces in one box • 6 gm per piece",
-        tag:"Snack Carton"
+        tag:"Sale Lowest Price"
       },
       {
         id:"smoky-popping",
         name:"Smoky Popping Candy",
         category:"candy",
         image:"assets/smoky-popping-candy.png",
-        price:2400,
+        price:2000,
         details:"Per carton: 24 inner • 30 pieces per inner • Smoky popping candy",
-        tag:"Popping Candy"
+        tag:"Sale Lowest Price"
       },
       {
         id:"jelly-gun",
         name:"Fun Blast With Jelly Gun",
         category:"candy",
         image:"assets/jelly-gun-banner.jpeg",
-        price:2400,
+        price:2000,
         details:"Per carton: 24 boxes • 30 pieces in one box • 5 gm per piece",
-        tag:"Jelly Candy"
+        tag:"Sale Lowest Price"
       },
       {
         id:"frutty-jam",
@@ -878,36 +885,36 @@
         name:"Paint Roller Shape Popping Candy",
         category:"candy",
         image:"assets/paint-roller-popping-candy.jpeg",
-        price:2600,
+        price:2000,
         details:"Per carton: 24 boxes • 30 pieces in one box • 8 gm per piece",
-        tag:"Popping Candy"
+        tag:"Sale Lowest Price"
       },
       {
         id:"nik-candy",
         name:"Nik Candy",
         category:"candy",
         image:"assets/nik-candy.jpeg",
-        price:2600,
+        price:2000,
         details:"Per carton: 24 boxes • 30 pieces in one box • 3 gm per piece",
-        tag:"Nik Candy"
+        tag:"Sale Lowest Price"
       },
       {
         id:"fresh-coc",
         name:"Fresh Coconut Water With Pulp",
         category:"drink",
         image:"assets/fresh-coco.jpeg",
-        price:1000,
+        price:750,
         details:"Per carton: 24 pieces • 250 ml each • Coconut water with pulp",
-        tag:"Drink Carton"
+        tag:"Sale Lowest Price"
       },
       {
         id:"gummy-bursting",
         name:"Gummy Candy 3D Bursting Ball",
         category:"candy",
         image:"assets/gummy-bursting-ball.jpeg",
-        price:2400,
+        price:1500,
         details:"Per carton: 24 boxes • 100 pieces in one box • 2 gm per piece",
-        tag:"Gummy Candy"
+        tag:"Sale Lowest Price"
       },
       {
         id:"crispy-marsh-mallow",
@@ -932,9 +939,9 @@
         name:"Popo Jelly Mixed Flavour",
         category:"candy",
         image:"assets/popo-jelly-mixed.jpeg",
-        price:2400,
+        price:1200,
         details:"Per carton: 12 inner • 100 pieces per inner • Mixed flavour jelly",
-        tag:"Mixed Jelly"
+        tag:"Sale Lowest Price"
       },
       {
         id:"juice-drop",
@@ -971,9 +978,9 @@
         name:"3D Ball",
         category:"candy",
         image:"assets/3d-ball.png",
-        price:2400,
+        price:1400,
         details:"Per carton: 20 inner • 30 pieces per inner • 3D ball fruity jelly",
-        tag:"3D Jelly"
+        tag:"Sale Lowest Price"
       },
 
       {
@@ -1038,7 +1045,7 @@
         <article class="product">
           <div class="product-img">
             <img src="${p.image}" alt="${p.name}" onerror="this.parentElement.innerHTML='<div class=&quot;img-error&quot;>Image not found<br>'+this.getAttribute(&quot;src&quot;)+'</div>'">
-            <span class="product-tag">${p.tag}</span>
+            <span class="product-tag ${p.tag === 'Sale Lowest Price' ? 'sale-lowest' : ''}">${p.tag}</span>
           </div>
           <div class="product-body">
             <h3>${p.name}</h3>
@@ -1209,7 +1216,7 @@
         <article class="product">
           <div class="product-img">
             <img src="${p.image}" alt="${p.name}" onerror="this.parentElement.innerHTML='<div class=&quot;img-error&quot;>Image not found<br>'+this.getAttribute(&quot;src&quot;)+'</div>'">
-            <span class="product-tag">${p.tag}</span>
+            <span class="product-tag ${p.tag === 'Sale Lowest Price' ? 'sale-lowest' : ''}">${p.tag}</span>
           </div>
           <div class="product-body">
             <h3>${p.name}</h3>
