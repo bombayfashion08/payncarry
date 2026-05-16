@@ -1473,7 +1473,7 @@
 
   <div class="pc-ai-input advanced">
     <input id="pcAiInput" placeholder="Ask about products, price, sale..." onkeydown="if(event.key==='Enter') pcSendAIMessage()" />
-    <button onclick="pcSendAIMessage()">Send</button>
+    <button type="button" id="pcAiSendBtn">Send</button>
   </div>
 </div>
 
@@ -1867,7 +1867,7 @@ function pcSmartReply(text){
     {
       keys:["bulk drinks for shop","best drinks"],
       ans:"For drinks, choose products based on customer demand, MRP, taste and margin. Confirm current stock on WhatsApp."
-    }
+    },
 
 
     {
@@ -2021,7 +2021,7 @@ function pcSmartReply(text){
     {
       keys:["premium product","high demand product"],
       ans:"Premium/trending products often include imported snacks, Oreo Go, Pringles, Frutella jars, Juice Drop and colourful candy items."
-    }
+    },
 
 
     {
@@ -2387,6 +2387,44 @@ function pcSmartReply(text){
       openCloseAi();
     }
   }, {capture:true, passive:false});
+})();
+</script>
+
+
+<script>
+(function(){
+  function runSend(){
+    if(typeof window.pcSendAIMessage === "function"){
+      window.pcSendAIMessage();
+    }else if(typeof pcSendAIMessage === "function"){
+      pcSendAIMessage();
+    }
+  }
+
+  document.addEventListener("click", function(e){
+    const send = e.target.closest("#pcAiSendBtn");
+    if(send){
+      e.preventDefault();
+      e.stopPropagation();
+      runSend();
+    }
+  }, true);
+
+  document.addEventListener("touchstart", function(e){
+    const send = e.target.closest("#pcAiSendBtn");
+    if(send){
+      e.preventDefault();
+      e.stopPropagation();
+      runSend();
+    }
+  }, {capture:true, passive:false});
+
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Enter" && e.target && e.target.id === "pcAiInput"){
+      e.preventDefault();
+      runSend();
+    }
+  }, true);
 })();
 </script>
 
