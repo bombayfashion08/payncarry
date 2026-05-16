@@ -565,6 +565,48 @@
   border:3px solid rgba(255,255,255,.8) !important;
 }
 
+
+/* Final Ai Chat clickable fix */
+#pcAiOpenBtn.pc-ai-btn,
+.pc-ai-btn.advanced{
+  position:fixed !important;
+  right:18px !important;
+  bottom:160px !important;
+  width:66px !important;
+  height:66px !important;
+  border-radius:50% !important;
+  border:3px solid #fff !important;
+  background:linear-gradient(135deg,#082f63,#0f5cc2,#ff5a1f) !important;
+  color:#fff !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  font-weight:950 !important;
+  font-size:20px !important;
+  z-index:2147483647 !important;
+  pointer-events:auto !important;
+  cursor:pointer !important;
+  user-select:none !important;
+  touch-action:manipulation !important;
+  box-shadow:0 18px 38px rgba(0,0,0,.28) !important;
+}
+
+#pcAiBox.pc-ai-box,
+.pc-ai-box.advanced{
+  position:fixed !important;
+  right:15px !important;
+  bottom:235px !important;
+  z-index:2147483646 !important;
+  pointer-events:auto !important;
+}
+
+.overlay,
+.drawer,
+.cart-drawer,
+.floating-whatsapp{
+  z-index:99998;
+}
+
 </style>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
@@ -1399,7 +1441,7 @@
 
 
 <!-- PaynCarry Advanced Free AI-Style Assistant for GitHub Pages -->
-<button type="button" class="pc-ai-btn advanced" onclick="pcToggleAIChat()" aria-label="Open Ai Chat">Ai</button>
+<button type="button" id="pcAiOpenBtn" class="pc-ai-btn advanced" aria-label="Open Ai Chat">Ai</button>
 
 <div class="pc-ai-box advanced" id="pcAiBox">
   <div class="pc-ai-head advanced">
@@ -2314,6 +2356,38 @@ function pcSmartReply(text){
 }
 
 
+</script>
+
+
+<script>
+(function(){
+  function openCloseAi(){
+    const box = document.getElementById("pcAiBox");
+    if(!box) return;
+    const current = window.getComputedStyle(box).display;
+    box.style.display = current === "none" ? "flex" : "none";
+  }
+
+  window.pcToggleAIChat = openCloseAi;
+
+  document.addEventListener("click", function(e){
+    const btn = e.target.closest("#pcAiOpenBtn, .pc-ai-btn");
+    if(btn){
+      e.preventDefault();
+      e.stopPropagation();
+      openCloseAi();
+    }
+  }, true);
+
+  document.addEventListener("touchstart", function(e){
+    const btn = e.target.closest("#pcAiOpenBtn, .pc-ai-btn");
+    if(btn){
+      e.preventDefault();
+      e.stopPropagation();
+      openCloseAi();
+    }
+  }, {capture:true, passive:false});
+})();
 </script>
 
 </body>
