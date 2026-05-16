@@ -1366,44 +1366,53 @@
     renderCart();
   </script>
 
-<!-- PaynCarry GitHub AI-Style Chat Assistant -->
-<div class="pc-ai-btn" onclick="pcToggleAIChat()">AI</div>
 
-<div class="pc-ai-box" id="pcAiBox">
-  <div class="pc-ai-head">
+<!-- PaynCarry Advanced Free AI-Style Assistant for GitHub Pages -->
+<div class="pc-ai-btn advanced" onclick="pcToggleAIChat()">Ai</div>
+
+<div class="pc-ai-box advanced" id="pcAiBox">
+  <div class="pc-ai-head advanced">
     <div>
-      <b>PaynCarry Assistant</b>
-      <small>Ask product, price, order, delivery</small>
+      <b>PaynCarry Ai Chat</b>
+      <small>Product guide • Price • Sale • Order help</small>
     </div>
     <button onclick="pcToggleAIChat()">×</button>
   </div>
 
-  <div class="pc-ai-quick">
+  <div class="pc-ai-quick advanced">
     <button onclick="pcQuickAsk('show sale products')">Sale</button>
-    <button onclick="pcQuickAsk('show drinks')">Drinks</button>
-    <button onclick="pcQuickAsk('show candy')">Candy</button>
+    <button onclick="pcQuickAsk('best selling products')">Best</button>
+    <button onclick="pcQuickAsk('new products')">New</button>
     <button onclick="pcQuickAsk('how to order')">Order</button>
+    <button onclick="pcQuickAsk('track my order')">Track</button>
+    <button onclick="pcQuickAsk('contact whatsapp')">WhatsApp</button>
   </div>
 
-  <div class="pc-ai-messages" id="pcAiMessages">
-    <div class="pc-bot-msg">Hi bro, I am PaynCarry assistant. Ask me product price, category, sale products, delivery or order help.</div>
+  <div class="pc-ai-messages advanced" id="pcAiMessages">
+    <div class="pc-bot-msg">
+      Hi, I am PaynCarry Ai Chat. Ask me like:<br>
+      <b>“show sale products”</b><br>
+      <b>“Juice Drop price”</b><br>
+      <b>“products under 2000”</b><br>
+      <b>“how to order”</b>
+    </div>
   </div>
 
-  <div class="pc-ai-input">
-    <input id="pcAiInput" placeholder="Type here..." onkeydown="if(event.key==='Enter') pcSendAIMessage()" />
+  <div class="pc-ai-input advanced">
+    <input id="pcAiInput" placeholder="Ask about products, price, sale..." onkeydown="if(event.key==='Enter') pcSendAIMessage()" />
     <button onclick="pcSendAIMessage()">Send</button>
   </div>
 </div>
 
 <style>
-.pc-ai-btn{
+.pc-ai-btn.advanced{
   position:fixed;
   right:20px;
   bottom:96px;
-  width:64px;
-  height:64px;
+  width:66px;
+  height:66px;
   border-radius:50%;
-  background:linear-gradient(135deg,#0b4a8b,#ff5a1f);
+  background:linear-gradient(135deg,#082f63,#0f5cc2,#ff5a1f);
   color:#fff;
   display:flex;
   align-items:center;
@@ -1411,58 +1420,59 @@
   font-weight:950;
   font-size:20px;
   z-index:99999;
-  box-shadow:0 18px 36px rgba(0,0,0,.26);
+  box-shadow:0 18px 38px rgba(0,0,0,.28);
   cursor:pointer;
+  border:3px solid rgba(255,255,255,.8);
 }
-.pc-ai-box{
+.pc-ai-box.advanced{
   position:fixed;
   right:15px;
   bottom:172px;
-  width:350px;
+  width:370px;
   max-width:calc(100% - 30px);
-  height:500px;
+  height:540px;
   background:#fff;
-  border-radius:26px;
+  border-radius:28px;
   overflow:hidden;
   display:none;
   flex-direction:column;
   z-index:99999;
-  box-shadow:0 28px 80px rgba(8,34,70,.30);
+  box-shadow:0 30px 90px rgba(8,34,70,.34);
   border:1px solid #e5eef9;
 }
-.pc-ai-head{
-  background:linear-gradient(135deg,#083b74,#0b4a8b);
+.pc-ai-head.advanced{
+  background:linear-gradient(135deg,#082f63,#0b4a8b);
   color:#fff;
-  padding:15px;
+  padding:16px;
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
-.pc-ai-head small{
+.pc-ai-head.advanced small{
   display:block;
   font-size:11px;
-  opacity:.85;
+  opacity:.86;
   margin-top:3px;
 }
-.pc-ai-head button{
-  width:32px;
-  height:32px;
+.pc-ai-head.advanced button{
+  width:34px;
+  height:34px;
   border-radius:50%;
   border:0;
   background:#fff;
   color:#0b4a8b;
-  font-size:22px;
+  font-size:23px;
   font-weight:950;
 }
-.pc-ai-quick{
+.pc-ai-quick.advanced{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(3,1fr);
   gap:7px;
   padding:10px;
   background:#fff;
   border-bottom:1px solid #e8f0fb;
 }
-.pc-ai-quick button{
+.pc-ai-quick.advanced button{
   border:0;
   border-radius:13px;
   padding:10px 5px;
@@ -1471,11 +1481,11 @@
   font-weight:900;
   font-size:12px;
 }
-.pc-ai-messages{
+.pc-ai-messages.advanced{
   flex:1;
   padding:13px;
   overflow-y:auto;
-  background:#f5f9ff;
+  background:linear-gradient(180deg,#f5f9ff,#eef5ff);
 }
 .pc-bot-msg,.pc-user-msg{
   padding:11px 13px;
@@ -1494,14 +1504,14 @@
   color:#fff;
   margin-left:38px;
 }
-.pc-ai-input{
+.pc-ai-input.advanced{
   display:flex;
   gap:8px;
   padding:12px;
   background:#fff;
   border-top:1px solid #e8f0fb;
 }
-.pc-ai-input input{
+.pc-ai-input.advanced input{
   flex:1;
   border:1px solid #dbe7f7;
   border-radius:15px;
@@ -1509,7 +1519,7 @@
   outline:none;
   font-size:14px;
 }
-.pc-ai-input button{
+.pc-ai-input.advanced button{
   border:0;
   border-radius:15px;
   padding:0 15px;
@@ -1517,12 +1527,40 @@
   color:#fff;
   font-weight:950;
 }
+.pc-ai-product-card{
+  background:#f7fbff;
+  border:1px solid #e4eefb;
+  border-radius:14px;
+  padding:10px;
+  margin:8px 0;
+}
+.pc-ai-product-card b{
+  color:#0b3b74;
+}
+.pc-ai-product-card small{
+  display:block;
+  color:#5f6b7a;
+  margin-top:3px;
+  line-height:1.4;
+}
+.pc-ai-mini-btn{
+  display:inline-block;
+  margin-top:8px;
+  padding:8px 10px;
+  border:0;
+  border-radius:11px;
+  background:#ff5a1f;
+  color:#fff!important;
+  font-weight:900;
+  font-size:12px;
+  cursor:pointer;
+}
 @media(max-width:480px){
-  .pc-ai-box{
+  .pc-ai-box.advanced{
     right:10px;
     bottom:165px;
     width:calc(100% - 20px);
-    height:470px;
+    height:500px;
   }
 }
 </style>
@@ -1548,72 +1586,126 @@ function pcMoney(n){
   try{return "₹"+Number(n).toLocaleString("en-IN");}
   catch(e){return "₹"+n;}
 }
+function pcCleanText(t){
+  return String(t||"").toLowerCase().replace(/[^a-z0-9₹ ]/g," ").replace(/\s+/g," ").trim();
+}
+function pcProducts(){
+  return (typeof products!=="undefined" && Array.isArray(products)) ? products : [];
+}
+function pcProductCard(p){
+  return `<div class="pc-ai-product-card">
+    <b>${p.name}</b><br>
+    <b>${pcMoney(p.price)}</b>
+    <small>${p.details||""}</small>
+    <small>Category: ${p.category||"product"} • ${p.tag||""}</small>
+    <button class="pc-ai-mini-btn" onclick="pcAskProductOnWhatsApp('${String(p.name).replace(/'/g,"")}')">Ask on WhatsApp</button>
+  </div>`;
+}
+function pcListProducts(arr, title){
+  if(!arr.length) return "No matching product found.";
+  return `<b>${title}</b><br>` + arr.slice(0,8).map(pcProductCard).join("");
+}
+function pcAskProductOnWhatsApp(name){
+  const msg="Hi PaynCarry, I want details for " + name;
+  window.open("https://wa.me/919321319778?text="+encodeURIComponent(msg),"_blank");
+}
 function pcSendAIMessage(){
   const input=document.getElementById("pcAiInput");
   const text=input.value.trim();
   if(!text) return;
   pcAddMsg(text,"user");
   input.value="";
-  setTimeout(()=>pcAddMsg(pcSmartReply(text),"bot"),350);
+  pcAddMsg("Typing...","bot");
+  const messages=document.getElementById("pcAiMessages");
+  const typing=messages.lastElementChild;
+  setTimeout(()=>{
+    if(typing) typing.remove();
+    pcAddMsg(pcSmartReply(text),"bot");
+  },420);
 }
 function pcSmartReply(text){
-  const q=text.toLowerCase();
-  const list=(typeof products!=="undefined" && Array.isArray(products)) ? products : [];
+  const q=pcCleanText(text);
+  const list=pcProducts();
+
+  if(q.includes("hello") || q==="hi" || q==="hey"){
+    return "Hi bro, welcome to PaynCarry. I can help with product prices, sale products, categories, order process, delivery and WhatsApp support.";
+  }
 
   if(q.includes("order") || q.includes("buy") || q.includes("cart")){
-    return "To order: select product → add carton to cart → open cart → confirm on WhatsApp. Our team will confirm stock and delivery charges.";
+    return "Order process:<br>1. Select product<br>2. Add carton quantity<br>3. Open cart<br>4. Confirm on WhatsApp<br><br>Delivery/courier charges are discussed on WhatsApp.";
   }
+
   if(q.includes("deliver") || q.includes("courier") || q.includes("shipping")){
-    return "Delivery/courier charges are discussed on WhatsApp after product and location confirmation.";
+    return "Delivery/courier charges depend on location and order quantity. Add products to cart and confirm on WhatsApp for final delivery details.";
   }
+
   if(q.includes("track")){
-    return "For tracking, send your name, product name and order date on WhatsApp.";
+    return "For tracking, send your name, WhatsApp number, order product and order date on WhatsApp. Our team will update your order status.";
   }
+
+  if(q.includes("whatsapp") || q.includes("contact") || q.includes("call")){
+    return 'Contact PaynCarry on WhatsApp: <b>9321319778</b><br><button class="pc-ai-mini-btn" onclick="window.open(\'https://wa.me/919321319778?text=Hi%20PaynCarry%2C%20I%20need%20help%20with%20products%20or%20order\',\'_blank\')">Open WhatsApp</button>';
+  }
+
   if(q.includes("instagram")){
-    return "Follow us on Instagram: @pay.n.carry for new arrivals and stock updates.";
-  }
-  if(q.includes("whatsapp") || q.includes("contact")){
-    return 'Need help? <button style="margin-top:8px;padding:10px 14px;border:0;border-radius:12px;background:#25D366;color:#fff;font-weight:900" onclick="window.open(\'https://wa.me/919321319778?text=Hi%20PaynCarry%2C%20I%20need%20help%20with%20products%20or%20order\',\'_blank\')">Chat on WhatsApp</button>';
+    return 'Instagram: <b>@pay.n.carry</b><br><button class="pc-ai-mini-btn" onclick="window.open(\'https://www.instagram.com/pay.n.carry?igsh=bGI2M3E0MDlqanJv\',\'_blank\')">Open Instagram</button>';
   }
 
-  let filtered=[];
-  if(q.includes("sale") || q.includes("lowest")){
-    filtered=list.filter(p => String(p.tag||"").toLowerCase().includes("sale"));
-    if(filtered.length){
-      return "<b>Sale Lowest Price products:</b><br>" + filtered.slice(0,10).map(p=>`${p.name} - ${pcMoney(p.price)}`).join("<br>");
-    }
+  if(q.includes("sale") || q.includes("lowest") || q.includes("discount") || q.includes("offer")){
+    const sale=list.filter(p=>pcCleanText(p.tag).includes("sale"));
+    return pcListProducts(sale,"Sale Lowest Price Products");
   }
+
+  if(q.includes("best") || q.includes("popular") || q.includes("top")){
+    const priority=["hello","fresh","gummy","popo","juice","oreo","pringles","frutella"];
+    const best=list.filter(p=>priority.some(x=>pcCleanText(p.name).includes(x))).slice(0,8);
+    return pcListProducts(best.length?best:list.slice(0,8),"Recommended Products");
+  }
+
+  if(q.includes("new") || q.includes("arrival")){
+    return pcListProducts(list.slice(-8).reverse(),"New Arrivals");
+  }
+
   if(q.includes("drink") || q.includes("drinks")){
-    filtered=list.filter(p => String(p.category||"").toLowerCase().includes("drink"));
-    if(filtered.length){
-      return "<b>Drink products:</b><br>" + filtered.slice(0,10).map(p=>`${p.name} - ${pcMoney(p.price)}`).join("<br>");
-    }
-  }
-  if(q.includes("candy")){
-    filtered=list.filter(p => String(p.category||"").toLowerCase().includes("candy"));
-    if(filtered.length){
-      return "<b>Candy products:</b><br>" + filtered.slice(0,10).map(p=>`${p.name} - ${pcMoney(p.price)}`).join("<br>");
-    }
-  }
-  if(q.includes("snack") || q.includes("snacks")){
-    filtered=list.filter(p => String(p.category||"").toLowerCase().includes("snack"));
-    if(filtered.length){
-      return "<b>Snack products:</b><br>" + filtered.slice(0,10).map(p=>`${p.name} - ${pcMoney(p.price)}`).join("<br>");
-    }
+    return pcListProducts(list.filter(p=>pcCleanText(p.category).includes("drink")),"Drink Products");
   }
 
-  const words=q.split(/\s+/).filter(w=>w.length>2);
+  if(q.includes("candy")){
+    return pcListProducts(list.filter(p=>pcCleanText(p.category).includes("candy")),"Candy Products");
+  }
+
+  if(q.includes("snack") || q.includes("snacks") || q.includes("oreo") || q.includes("pringles")){
+    return pcListProducts(list.filter(p=>pcCleanText(p.category).includes("snack")),"Snack Products");
+  }
+
+  const underMatch=q.match(/under\s*(\d+)/) || q.match(/below\s*(\d+)/);
+  if(underMatch){
+    const max=Number(underMatch[1]);
+    return pcListProducts(list.filter(p=>Number(p.price)<=max),`Products under ₹${max}`);
+  }
+
+  const aboveMatch=q.match(/above\s*(\d+)/) || q.match(/over\s*(\d+)/);
+  if(aboveMatch){
+    const min=Number(aboveMatch[1]);
+    return pcListProducts(list.filter(p=>Number(p.price)>=min),`Products above ₹${min}`);
+  }
+
+  const priceMatch=q.match(/(\d+)/);
+  if(q.includes("price") && priceMatch){
+    const amount=Number(priceMatch[1]);
+    const near=list.filter(p=>Math.abs(Number(p.price)-amount)<=200);
+    if(near.length) return pcListProducts(near,`Products near ₹${amount}`);
+  }
+
+  const words=q.split(" ").filter(w=>w.length>2 && !["price","product","show","give","what","available"].includes(w));
   let found=list.filter(p=>{
-    const name=String(p.name||"").toLowerCase();
-    const tag=String(p.tag||"").toLowerCase();
-    return words.some(w=>name.includes(w) || tag.includes(w));
+    const hay=pcCleanText(`${p.name} ${p.tag} ${p.details} ${p.category}`);
+    return words.some(w=>hay.includes(w));
   });
 
-  if(found.length){
-    return "<b>Found products:</b><br>" + found.slice(0,8).map(p=>`${p.name}<br><b>${pcMoney(p.price)}</b><br><small>${p.details||""}</small>`).join("<br><br>");
-  }
+  if(found.length) return pcListProducts(found,"Found Products");
 
-  return "I can help with product price, sale items, drinks, candy, snacks, order, delivery and tracking. Try typing: show sale products or Juice Drop price.";
+  return "I can help like a Ai Chat for PaynCarry. Try:<br><b>show sale products</b><br><b>Juice Drop price</b><br><b>products under 2000</b><br><b>show snacks</b><br><b>how to order</b>";
 }
 </script>
 
