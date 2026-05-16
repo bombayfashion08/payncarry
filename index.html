@@ -534,7 +534,38 @@
       box-shadow:0 12px 28px rgba(255,90,31,.28)!important;
       border:0!important;
     }
-        </style>
+        
+/* Ai Chat click fix */
+.pc-ai-btn,
+.pc-ai-btn.advanced{
+  display:flex !important;
+  position:fixed !important;
+  right:18px !important;
+  bottom:170px !important;
+  z-index:2147483647 !important;
+  pointer-events:auto !important;
+  cursor:pointer !important;
+  user-select:none !important;
+  touch-action:manipulation !important;
+}
+
+.pc-ai-box,
+.pc-ai-box.advanced{
+  z-index:2147483647 !important;
+  pointer-events:auto !important;
+}
+
+.floating-whatsapp{
+  bottom:88px !important;
+  z-index:99998 !important;
+}
+
+
+.pc-ai-btn{
+  border:3px solid rgba(255,255,255,.8) !important;
+}
+
+</style>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -1368,7 +1399,7 @@
 
 
 <!-- PaynCarry Advanced Free AI-Style Assistant for GitHub Pages -->
-<div class="pc-ai-btn advanced" onclick="pcToggleAIChat()">Ai</div>
+<button type="button" class="pc-ai-btn advanced" onclick="pcToggleAIChat()" aria-label="Open Ai Chat">Ai</button>
 
 <div class="pc-ai-box advanced" id="pcAiBox">
   <div class="pc-ai-head advanced">
