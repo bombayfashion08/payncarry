@@ -1446,7 +1446,7 @@
 <div class="pc-ai-box advanced" id="pcAiBox">
   <div class="pc-ai-head advanced">
     <div>
-      <b>PaynCarry Ai Chat</b>
+      <b>PaynCarry Real Ai Chat</b>
       <small>Product guide • Price • Sale • Order help</small>
     </div>
     <button onclick="pcToggleAIChat()">×</button>
@@ -1463,7 +1463,7 @@
 
   <div class="pc-ai-messages advanced" id="pcAiMessages">
     <div class="pc-bot-msg">
-      Hi, I am PaynCarry Ai Chat. Ask about products, price, sale, stock, refund, payment, delivery, bulk order or website help like:<br>
+      Hi, I am PaynCarry Real Ai Chat. Ask about products, price, sale, stock, refund, payment, delivery, bulk order or website help like:<br>
       <b>“show sale products”</b><br>
       <b>“Juice Drop price”</b><br>
       <b>“products under 2000”</b><br>
@@ -1698,471 +1698,29 @@ function pcSendAIMessage(){
 }
 
 
+
 function pcSmartReply(text){
   const q=pcCleanText(text);
   const list=pcProducts();
 
+  function hasAny(arr){ return arr.some(k => q.includes(k)); }
+
+  if(q.includes("hello") || q==="hi" || q==="hey" || q.includes("salam") || q.includes("assalam")){
+    return "Hi bro, welcome to PaynCarry. I can help with products, prices, sale, stock, order, payment, delivery, refund, tracking and WhatsApp support.";
+  }
+
+  /* Important direct answers first */
+  if(hasAny(["instagram","insta","instagram id","insta id","ig","ig id","page id","social media"])){
+    return 'Instagram ID: <b>@pay.n.carry</b><br>Follow PaynCarry for new arrivals, sale updates and stock posts.<br><button class="pc-ai-mini-btn" onclick="window.open(\'https://www.instagram.com/pay.n.carry?igsh=bGI2M3E0MDlqanJv\',\'_blank\')">Open Instagram</button>';
+  }
+
+  if(hasAny(["contact","phone","number","whatsapp","call","help","support","customer care","mobile number"])){
+    return 'PaynCarry WhatsApp: <b>9321319778</b><br>Send your product list and carton quantity for stock, price and delivery confirmation.<br><button class="pc-ai-mini-btn" onclick="window.open(\'https://wa.me/919321319778?text=Hi%20PaynCarry%2C%20I%20need%20help%20with%20products%20or%20order\',\'_blank\')">Open WhatsApp</button>';
+  }
+
   const businessAnswers = [
-
     {
-      keys:["holiday","sunday","weekend","closed today","open today"],
-      ans:"Working/holiday updates can change. Please message PaynCarry on WhatsApp to confirm today’s availability and reply time."
-    },
-    {
-      keys:["festival offer","diwali offer","eid offer","ramzan offer","new year offer"],
-      ans:"Festival offers depend on current stock. Ask on WhatsApp for today’s sale and limited-time bulk offers."
-    },
-    {
-      keys:["student","student business","start business"],
-      ans:"For starting a small business, begin with lower budget fast-moving products, post on WhatsApp/Instagram, and repeat items that sell quickly."
-    },
-    {
-      keys:["investment","budget 5000","budget 10000","budget 20000","start with"],
-      ans:"Tell us your budget and customer type. For starter stock, choose mixed fast-moving candy, drinks and snacks instead of buying only one product."
-    },
-    {
-      keys:["which product should i buy","what should i buy","confused","help me choose"],
-      ans:"For shops, start with colourful and fast-moving items. Good choices: Juice Drop, Gummy Candy, Oreo Go, Popo Jelly, Frutella and sale products."
-    },
-    {
-      keys:["low risk","safe product","beginner product"],
-      ans:"Low-risk starter products are those with attractive packaging, smaller price point and repeat demand. Ask for sale products or products under your budget."
-    },
-    {
-      keys:["counter display","display idea","shop display"],
-      ans:"Display idea: keep colourful candy near billing counter, group flavours together, add price tags and show 'New Arrival' or 'Limited Stock' labels."
-    },
-    {
-      keys:["instagram caption","caption","post caption"],
-      ans:"Caption idea: New bulk stock available at PaynCarry. Imported drinks, candies and snacks for shops, cafés and resellers. Minimum order: 1 carton. WhatsApp to order."
-    },
-    {
-      keys:["whatsapp status","status caption"],
-      ans:"Status idea: Bulk imported drinks and candy stock available. Minimum 1 carton. Best for shops and resellers. Order on WhatsApp: 9321319778."
-    },
-    {
-      keys:["reel script","video script","promo script"],
-      ans:"Reel script: Imported drinks and candy stock available. Choose product, add cartons to cart, and order directly on WhatsApp. PaynCarry - bulk products for shops and resellers."
-    },
-    {
-      keys:["customer message","dm message","client message"],
-      ans:"Message format: Hi, PaynCarry bulk stock is available. Imported drinks, candies and snacks by carton. Please share your required product and quantity."
-    },
-    {
-      keys:["negotiation","last price","fixed price"],
-      ans:"Prices depend on stock and quantity. For best/last price, send product names and carton quantity on WhatsApp."
-    },
-    {
-      keys:["near me","nearby","local delivery"],
-      ans:"Please share your area/city on WhatsApp. Our team will confirm delivery or pickup option."
-    },
-    {
-      keys:["return policy","refund policy","policy"],
-      ans:"Return/refund support depends on issue, product condition and order status. Please report issues quickly with photos/videos on WhatsApp."
-    },
-    {
-      keys:["terms","condition","terms and conditions"],
-      ans:"Order terms are confirmed on WhatsApp: stock availability, price, payment, delivery charges and dispatch details."
-    },
-    {
-      keys:["bulk order form","form","google form"],
-      ans:"Currently orders are confirmed on WhatsApp. Send product names, carton quantity, name, phone and city for fast processing."
-    },
-    {
-      keys:["invoice name","bill name","company name"],
-      ans:"For invoice/bill name, share your business name and details on WhatsApp before order confirmation."
-    },
-    {
-      keys:["gst number","gstin"],
-      ans:"If you need GST/GSTIN details on invoice, please discuss with PaynCarry on WhatsApp before order confirmation."
-    },
-    {
-      keys:["pallet","container","truck load","large shipment"],
-      ans:"For very large quantity shipments, share product list, carton quantity and city on WhatsApp. Our team will check stock and transport option."
-    },
-    {
-      keys:["minimum quantity for discount","discount quantity"],
-      ans:"Discount quantity depends on product and current stock. Send required carton quantity on WhatsApp for best rate."
-    },
-    {
-      keys:["out of stock alternative","alternative","similar product"],
-      ans:"If a product is out of stock, message us on WhatsApp. Our team can suggest similar candy, snack or drink products."
-    },
-    {
-      keys:["expiry near","short expiry"],
-      ans:"Please confirm expiry before placing order. Short expiry or clearance stock, if available, will be informed clearly on WhatsApp."
-    },
-    {
-      keys:["clearance","clearance sale"],
-      ans:"Clearance sale depends on current stock. Ask on WhatsApp for available clearance or lowest price items."
-    },
-    {
-      keys:["box photo","carton photo","outer carton"],
-      ans:"For box/carton photos, message the product name on WhatsApp. Our team can share current stock photos if available."
-    },
-    {
-      keys:["dimensions","carton size","box size"],
-      ans:"Carton dimensions vary product-wise. Please ask on WhatsApp if you need carton size for transport calculation."
-    },
-    {
-      keys:["weight of carton","carton weight"],
-      ans:"Carton weight depends on product and packing. Ask on WhatsApp for current carton weight before arranging transport."
-    },
-    {
-      keys:["cold storage","refrigerate","fridge"],
-      ans:"Most packaged products should be kept cool and dry unless packaging says otherwise. Drinks may taste better chilled. Follow package instructions."
-    },
-    {
-      keys:["resell online","amazon","flipkart","meesho"],
-      ans:"For online reselling, check platform rules, MRP, barcode, expiry and packaging before listing. Confirm product details on WhatsApp first."
-    },
-    {
-      keys:["food license","fssai required","license required"],
-      ans:"For selling food products, local rules may require proper license/registration. Please check your local requirements before resale."
-    },
-    {
-      keys:["bulk buyer","serious buyer"],
-      ans:"For serious bulk enquiry, send complete details: product names, carton quantity, city, delivery/pickup preference and payment mode."
-    },
-    {
-      keys:["price not showing","wrong price","price error"],
-      ans:"If price looks wrong, please confirm on WhatsApp. Final price is always confirmed before order dispatch."
-    },
-    {
-      keys:["cart total","total amount","calculate total"],
-      ans:"Add products to cart and quantity; website will calculate product total. Delivery/courier charges are confirmed on WhatsApp."
-    },
-    {
-      keys:["remove item","change quantity","edit cart"],
-      ans:"Open cart to increase/decrease quantity or remove products before sending order on WhatsApp."
-    },
-    {
-      keys:["mobile problem","phone issue","not working on mobile"],
-      ans:"Please refresh the page or reopen the website. If still not working, send screenshot on WhatsApp and order manually."
-    },
-    {
-      keys:["desktop","pc","laptop"],
-      ans:"The website works on phone and PC. If you face any issue, refresh and try again or contact WhatsApp support."
-    },
-    {
-      keys:["language support","marathi","urdu"],
-      ans:"You can message in Hindi, English or simple local language on WhatsApp. Our team will understand and help."
-    },
-    {
-      keys:["business hours","reply late","no reply"],
-      ans:"If reply is delayed, please wait or send product list clearly. Our team will respond as soon as possible."
-    },
-    {
-      keys:["trust issue","is it genuine","scam"],
-      ans:"You can verify through WhatsApp chat, product photos, current stock details and order confirmation before payment."
-    },
-    {
-      keys:["advance safe","payment safe"],
-      ans:"Only make payment after confirming product, price, stock and delivery details on WhatsApp."
-    },
-    {
-      keys:["bulk candy for shop","best candy for shop"],
-      ans:"For shops, colourful candy, gummy, popping candy, Juice Drop and Oreo Go-style products usually attract customers near the counter."
-    },
-    {
-      keys:["bulk drinks for shop","best drinks"],
-      ans:"For drinks, choose products based on customer demand, MRP, taste and margin. Confirm current stock on WhatsApp."
-    },
-
-
-    {
-      keys:["credit","credit period","udhaar","monthly payment","pay later"],
-      ans:"Credit/pay-later terms are not confirmed on website. Please discuss with PaynCarry on WhatsApp. Approval depends on customer profile and order history."
-    },
-    {
-      keys:["first order","new customer","first time"],
-      ans:"For first order, select products, send cart on WhatsApp, and our team will guide you with stock, payment and delivery confirmation."
-    },
-    {
-      keys:["repeat order","reorder","same order again"],
-      ans:"For repeat order, send your previous order product names or screenshot on WhatsApp. Our team will confirm current stock and updated price."
-    },
-    {
-      keys:["whatsapp order format","order format","send order format"],
-      ans:"Order format:<br>Name/Shop Name:<br>City/Area:<br>Product Name:<br>Carton Quantity:<br>Delivery/Pickup:<br>Payment preference:"
-    },
-    {
-      keys:["delivery address","address format","send address"],
-      ans:"Send address format:<br>Name:<br>Mobile:<br>Full Address:<br>Area/City/Pincode:<br>Landmark:<br>Preferred delivery time:"
-    },
-    {
-      keys:["pincode","pin code","postcode"],
-      ans:"Please share your pincode on WhatsApp. Delivery/courier option and charges depend on pincode and carton quantity."
-    },
-    {
-      keys:["bulk enquiry","business enquiry","b2b","corporate order"],
-      ans:"For B2B or bulk enquiry, send product list, carton quantity, city and business type on WhatsApp. Our team will reply with best available option."
-    },
-    {
-      keys:["export","import","imported product source"],
-      ans:"PaynCarry deals in imported/trending products and carton supply. For exact batch/source details, please ask on WhatsApp before ordering."
-    },
-    {
-      keys:["mrp","retail price","selling price printed"],
-      ans:"MRP/printed retail price may vary by product and batch. Please confirm current batch details on WhatsApp if MRP is important for your order."
-    },
-    {
-      keys:["barcode","scan","fssai","license"],
-      ans:"Barcode/FSSAI/license details are usually printed on packaging where applicable. Please ask for current product photo on WhatsApp for confirmation."
-    },
-    {
-      keys:["storage","store product","temperature","keep where"],
-      ans:"Store products in a cool and dry place, away from direct sunlight. For drinks or sensitive items, follow instructions printed on packaging."
-    },
-    {
-      keys:["melt","melting","heat","summer"],
-      ans:"Some candy/chocolate/marshmallow items may be sensitive to heat. Delivery and storage should be discussed on WhatsApp, especially in summer."
-    },
-    {
-      keys:["damage during transport","transport damage","courier damage"],
-      ans:"For transport damage, please share parcel opening video and photos immediately on WhatsApp. Support depends on courier/transport condition and order terms."
-    },
-    {
-      keys:["opening video","unboxing video","parcel opening"],
-      ans:"Opening video is recommended when receiving parcel/carton, especially for damage/wrong item support."
-    },
-    {
-      keys:["payment proof","screenshot payment","payment screenshot"],
-      ans:"After payment, please send screenshot with your name and order details on WhatsApp for faster confirmation."
-    },
-    {
-      keys:["payment failed","paid but not received","transaction failed"],
-      ans:"If payment failed or is pending, please share transaction screenshot/UTR on WhatsApp. Our team will check and confirm."
-    },
-    {
-      keys:["utr","transaction id","reference number"],
-      ans:"Please send UTR/transaction ID on WhatsApp after payment. It helps verify your order payment quickly."
-    },
-    {
-      keys:["order id","order number"],
-      ans:"If you have an order ID or previous chat screenshot, send it on WhatsApp for faster order tracking."
-    },
-    {
-      keys:["menu","categories","category"],
-      ans:"Website categories include Drinks, Candy and Snacks. You can also use search or ask me product name directly."
-    },
-    {
-      keys:["compare","which is better","better product"],
-      ans:"Tell me the two product names you want to compare. For sales, fast-moving candy/drinks usually work better for retail counters."
-    },
-    {
-      keys:["for small shop","small shop product","starter stock"],
-      ans:"For a small shop, start with fast-moving low-risk products like Juice Drop, gummy candy, popping candy, drinks and snack packs. Confirm budget on WhatsApp."
-    },
-    {
-      keys:["for cafe","cafe product"],
-      ans:"For cafés, drinks, snack cartons, marshmallow and premium candy items can work well. Share your café type on WhatsApp for suggestions."
-    },
-    {
-      keys:["for wholesale market","market sale"],
-      ans:"For wholesale market sale, choose products with good visual appeal, strong margin and fast movement. Ask on WhatsApp for current trending stock."
-    },
-    {
-      keys:["how to sell","sell this product","selling idea"],
-      ans:"Selling idea: display colourful products near billing counter, make combo packs, post on WhatsApp status/Instagram, and highlight limited stock or sale price."
-    },
-    {
-      keys:["marketing","promotion","promote","instagram post"],
-      ans:"Promotion idea: post product photo, carton price, minimum order, and WhatsApp link. Use stories/reels for new arrivals and sale products."
-    },
-    {
-      keys:["poster","banner","reel","status"],
-      ans:"For poster/reel/status, use product photo with text: Product name, carton quantity, price, minimum order and WhatsApp number."
-    },
-    {
-      keys:["website link","site link","link"],
-      ans:"Website: payncarry.eu.cc. You can browse products, add to cart and confirm order on WhatsApp."
-    },
-    {
-      keys:["share product","send product"],
-      ans:"You can share the website link or send product name/photo on WhatsApp. Our team will confirm price and stock."
-    },
-    {
-      keys:["why choose","why payncarry","trust"],
-      ans:"PaynCarry focuses on bulk carton products, clear pricing, easy cart, WhatsApp confirmation, and updated product catalogue for shops/resellers."
-    },
-    {
-      keys:["fake order","serious buyer"],
-      ans:"Orders are confirmed only on WhatsApp after stock, price, payment and delivery discussion. Serious buyers can share complete order details."
-    },
-    {
-      keys:["hold stock","reserve stock","book stock"],
-      ans:"Stock hold/reservation depends on availability and payment/order confirmation. Please ask on WhatsApp."
-    },
-    {
-      keys:["limited stock","limited offer","limited sale"],
-      ans:"Limited stock/sale products can finish quickly. Please confirm availability on WhatsApp before placing order."
-    },
-    {
-      keys:["out of budget","expensive","high price"],
-      ans:"Tell us your budget and category. We can suggest lower-price sale items or products under your budget."
-    },
-    {
-      keys:["language","hindi","english"],
-      ans:"You can chat in Hindi or English on WhatsApp. Our team will help you with product and order details."
-    },
-    {
-      keys:["owner","business owner","seller"],
-      ans:"PaynCarry team handles product enquiries and bulk orders on WhatsApp. For business discussion, message us with your requirement."
-    },
-    {
-      keys:["how many cartons","carton quantity suggestion"],
-      ans:"Carton quantity depends on your shop size, budget and product demand. For first order, start small and repeat fast-moving products."
-    },
-    {
-      keys:["low price product","cheapest product","cheap product"],
-      ans:"Ask me 'products under 1500' or 'sale products' to see lower-price options from the current product list."
-    },
-    {
-      keys:["premium product","high demand product"],
-      ans:"Premium/trending products often include imported snacks, Oreo Go, Pringles, Frutella jars, Juice Drop and colourful candy items."
-    },
-
-
-    {
-      keys:["expiry date","mfg","manufacturing","best before","shelf life"],
-      ans:"Expiry/MFG details depend on current stock batch. Please ask on WhatsApp before confirming order and our team can share available batch details."
-    },
-    {
-      keys:["halal","veg","vegetarian","non veg","jain"],
-      ans:"Product dietary details can vary by product and batch. Please check product packaging or ask our team on WhatsApp before ordering."
-    },
-    {
-      keys:["packing","packaging","carton packing","box packing"],
-      ans:"Products are supplied in carton/inner packing as shown in product details. For exact carton packing and available batch, confirm on WhatsApp."
-    },
-    {
-      keys:["weight","gm","gram","ml","bottle size","can size"],
-      ans:"Size/weight is mentioned in each product details. If you need exact current stock size, send the product name on WhatsApp."
-    },
-    {
-      keys:["how many pieces","pieces in carton","pcs","piece count","inner count"],
-      ans:"Each product has different carton and inner piece count. Search the product name or message us on WhatsApp for exact packing details."
-    },
-    {
-      keys:["bulk list","price list","catalog","catalogue","product list","rate list"],
-      ans:"You can check products on this website. For latest price list/catalogue, send a message on WhatsApp and our team will share available stock details."
-    },
-    {
-      keys:["pdf","brochure"],
-      ans:"For product brochure or price list PDF, please contact us on WhatsApp. Our team will share updated details if available."
-    },
-    {
-      keys:["reseller price","dealer price","wholesale rate","margin price"],
-      ans:"Dealer/reseller rates depend on quantity and stock. Share your required products and carton quantity on WhatsApp for the best rate."
-    },
-    {
-      keys:["bulk quantity","large quantity","more carton","multiple carton"],
-      ans:"For bulk quantity orders, send product names and carton quantity on WhatsApp. Our team will confirm stock and best price."
-    },
-    {
-      keys:["confirm order","final order","book order"],
-      ans:"To confirm order, add products to cart and send details on WhatsApp. Our team will confirm stock, price, payment and delivery before dispatch."
-    },
-    {
-      keys:["dispatch","dispatched","shipping date","dispatch time"],
-      ans:"Dispatch time depends on payment/order confirmation and stock availability. Our team will update dispatch details on WhatsApp."
-    },
-    {
-      keys:["transport name","courier name","which courier","logistics"],
-      ans:"Courier/transport is selected based on your location and order size. Final transport details will be shared on WhatsApp."
-    },
-    {
-      keys:["outstation","outside mumbai","outside maharashtra","pan india"],
-      ans:"Outstation delivery may be available depending on transport and order quantity. Share your city and product list on WhatsApp."
-    },
-    {
-      keys:["cod available","cash on delivery available"],
-      ans:"COD availability depends on location and order value. Please confirm on WhatsApp before placing the order."
-    },
-    {
-      keys:["advance payment","token amount","booking amount"],
-      ans:"Advance or booking payment depends on order type and quantity. Our team will confirm payment terms on WhatsApp."
-    },
-    {
-      keys:["bank transfer","account details","qr code","upi id"],
-      ans:"For payment QR/UPI/bank details, please contact PaynCarry on WhatsApp after confirming your order."
-    },
-    {
-      keys:["send photo","real photo","actual photo","current photo","stock photo"],
-      ans:"For actual current stock photo, message the product name on WhatsApp. Our team can share available product photos if needed."
-    },
-    {
-      keys:["video","product video","opening video"],
-      ans:"For product videos or opening/unboxing proof, please contact us on WhatsApp. For damaged product support, opening video is helpful."
-    },
-    {
-      keys:["kid safe","safe for kids","children safe"],
-      ans:"Please check product packaging, ingredients and age suitability before purchase. For any specific product, ask our team on WhatsApp."
-    },
-    {
-      keys:["ingredients","nutrition","allergy","allergic","allergen"],
-      ans:"Ingredients and nutrition details are printed on product packaging and may vary by batch/flavour. Please confirm on WhatsApp if you need specific details."
-    },
-    {
-      keys:["store","shop owner","kirana","general store"],
-      ans:"For shop owners, PaynCarry can suggest fast-moving carton products based on your budget and customer type. Message us on WhatsApp for guidance."
-    },
-    {
-      keys:["college","canteen","school canteen"],
-      ans:"For canteen or college counter, fast-moving products are drinks, candy, jelly, wafer snacks and popping candy. Contact us for suggestions."
-    },
-    {
-      keys:["festival","event","birthday party","party order","wedding"],
-      ans:"For parties/events, share guest quantity and budget on WhatsApp. Our team can suggest suitable candy, drinks and snack cartons."
-    },
-    {
-      keys:["budget","low budget","cheap","affordable"],
-      ans:"Tell us your budget and category like drinks, candy or snacks. Ai Chat can show products under a price, or you can ask on WhatsApp for suggestions."
-    },
-    {
-      keys:["under 1000","below 1000"],
-      ans:"You can ask: products under 1000. Sale items and drink products may fit lower budgets depending on current stock."
-    },
-    {
-      keys:["under 1500","below 1500"],
-      ans:"You can ask: products under 1500. Ai Chat will show matching products from the current website list."
-    },
-    {
-      keys:["under 2500","below 2500"],
-      ans:"You can ask: products under 2500. Many candy and snack cartons may match this range."
-    },
-    {
-      keys:["taste","which flavour best","best flavour"],
-      ans:"Best flavour depends on customer preference. Popular choices usually include strawberry, orange, blueberry, grape, mango and mixed flavour."
-    },
-    {
-      keys:["assorted flavour","mix flavour","mixed flavour"],
-      ans:"Assorted/mixed flavour availability depends on current stock. Please confirm flavour mix on WhatsApp before final order."
-    },
-    {
-      keys:["not showing","image not showing","photo not showing","blank image"],
-      ans:"If product image is not showing, please refresh the page. If still not visible, send a screenshot on WhatsApp and our team will help."
-    },
-    {
-      keys:["add product","new product request","need product","want product"],
-      ans:"If you want a product not listed, send the product name or photo on WhatsApp. Our team will check availability."
-    },
-    {
-      keys:["complaint","problem","issue","bad experience"],
-      ans:"Sorry for the issue. Please message us on WhatsApp with order details and photos/videos. Our team will check and support you."
-    },
-    {
-      keys:["thank","thanks","ok thanks"],
-      ans:"You're welcome. For quick order or stock confirmation, message PaynCarry on WhatsApp."
-    },
-    {
-      keys:["who are you","about payncarry","what is payncarry"],
-      ans:"PaynCarry is a bulk carton supplier for imported drinks, candies, snacks and trending products for shops, cafés, resellers and businesses."
-    },
-
-    {
-      keys:["refund","return","replace","exchange","damage","damaged","wrong item","wrong product","broken","leak","leaking","seal open","expired","expiry"],
+      keys:["refund","return","replace","exchange","damage","damaged","wrong item","wrong product","broken","leak","leaking","seal open","expired","expiry","return policy","refund policy"],
       ans:"Refund/return support is handled on WhatsApp after checking order details. Please share your name, order product, order date, opening video/photo and issue details. Our team will guide you."
     },
     {
@@ -2170,27 +1728,23 @@ function pcSmartReply(text){
       ans:"Order cancellation depends on order status. If dispatch is not done, cancellation may be possible. Please contact us on WhatsApp with your order details."
     },
     {
-      keys:["payment","pay","upi","gpay","google pay","phonepe","paytm","cash","cod","online","advance"],
+      keys:["order","buy","cart","checkout","purchase","how to order","place order","confirm order","final order","book order"],
+      ans:"Order process:<br>1. Select product<br>2. Add carton quantity<br>3. Open cart<br>4. Confirm order on WhatsApp<br>5. Our team confirms stock, payment and delivery charges."
+    },
+    {
+      keys:["payment","pay","upi","gpay","google pay","phonepe","paytm","cash","cod","online","advance","qr code","upi id","bank transfer"],
       ans:"Payment options can be confirmed on WhatsApp. You can ask for UPI/payment details or Cash on Delivery availability before confirming the order."
     },
     {
-      keys:["bill","invoice","gst","gst bill","tax invoice"],
-      ans:"For bill/invoice or GST related details, please contact PaynCarry on WhatsApp before placing the order. Our team will confirm what is available for your order."
-    },
-    {
-      keys:["delivery","courier","shipping","charge","charges","transport","parcel","freight","delivery time","how many days"],
+      keys:["delivery","courier","shipping","charge","charges","transport","parcel","freight","delivery time","how many days","same day","urgent","fast delivery","today delivery","express"],
       ans:"Delivery/courier charges and time depend on your location, carton quantity and transport option. Add products to cart and confirm on WhatsApp for final delivery details."
     },
     {
-      keys:["same day","urgent","fast delivery","today delivery","express"],
-      ans:"Urgent or same-day delivery depends on stock and your location. Please message us on WhatsApp before placing the order."
-    },
-    {
-      keys:["track","tracking","order status","status","where is my order"],
+      keys:["track","tracking","order status","status","where is my order","order id","order number"],
       ans:"To track your order, send your name, WhatsApp number, product name and order date on WhatsApp. Our team will update the status."
     },
     {
-      keys:["stock","available","availability","in stock","out of stock","ready stock"],
+      keys:["stock","available","availability","in stock","out of stock","ready stock","hold stock","reserve stock"],
       ans:"Stock changes daily. Send the product name on WhatsApp and our team will confirm current availability before order confirmation."
     },
     {
@@ -2198,63 +1752,55 @@ function pcSmartReply(text){
       ans:"Minimum order is usually carton quantity. Product quantity depends on the item. You can confirm exact minimum quantity on WhatsApp."
     },
     {
-      keys:["wholesale","bulk","reseller","shop","cafe","dealer","distributor","retailer","supermarket","mart"],
+      keys:["wholesale","bulk","reseller","shop","cafe","dealer","distributor","retailer","supermarket","mart","b2b","corporate order"],
       ans:"PaynCarry supplies bulk carton products for shops, cafés, resellers and businesses. For wholesale quantity and best price, contact us on WhatsApp."
     },
     {
-      keys:["bulk discount","discount","best price","final price","less price","nego","negotiate"],
+      keys:["bulk discount","discount","best price","final price","less price","nego","negotiate","last price","fixed price"],
       ans:"For bulk quantity, best price or discount, please send product names and quantity on WhatsApp. Our team will share the best available rate."
     },
     {
-      keys:["location","address","shop location","where are you","pickup","pick up","warehouse"],
+      keys:["location","address","shop location","where are you","pickup","pick up","warehouse","near me","nearby","local delivery"],
       ans:"For pickup/location details, please contact PaynCarry on WhatsApp. Our team will share exact details as per order confirmation."
     },
     {
-      keys:["area","city","mumbai","thane","nashik","nasik","pune","india"],
-      ans:"Delivery availability depends on area and transport option. Please share your city and product list on WhatsApp for confirmation."
+      keys:["area","city","mumbai","thane","nashik","nasik","pune","india","pincode","pin code","postcode"],
+      ans:"Delivery availability depends on area, pincode and transport option. Please share your city/pincode and product list on WhatsApp for confirmation."
     },
     {
-      keys:["instagram","insta","reels","page"],
-      ans:'Instagram: <b>@pay.n.carry</b><br><button class="pc-ai-mini-btn" onclick="window.open(\'https://www.instagram.com/pay.n.carry?igsh=bGI2M3E0MDlqanJv\',\'_blank\')">Open Instagram</button>'
+      keys:["bill","invoice","gst","gst bill","tax invoice","gst number","gstin","invoice name","bill name","company name"],
+      ans:"For bill/invoice or GST related details, please contact PaynCarry on WhatsApp before placing the order. Our team will confirm what is available for your order."
     },
     {
-      keys:["contact","phone","number","whatsapp","call","help","support","customer care"],
-      ans:'Contact PaynCarry on WhatsApp: <b>9321319778</b><br><button class="pc-ai-mini-btn" onclick="window.open(\'https://wa.me/919321319778?text=Hi%20PaynCarry%2C%20I%20need%20help%20with%20products%20or%20order\',\'_blank\')">Open WhatsApp</button>'
+      keys:["timing","time","open","close","working hours","reply time","holiday","sunday","weekend","closed today","open today"],
+      ans:"You can message anytime on WhatsApp. Working/holiday updates can change, so please confirm today’s availability on WhatsApp."
     },
     {
-      keys:["order","buy","cart","checkout","purchase","how to order","place order"],
-      ans:"Order process:<br>1. Select product<br>2. Add carton quantity<br>3. Open cart<br>4. Confirm order on WhatsApp<br>5. Our team confirms stock, payment and delivery charges."
+      keys:["new arrival","new product","latest product","new stock","festival offer","diwali offer","eid offer","ramzan offer","new year offer"],
+      ans:"New arrivals and offers are updated on the website and Instagram. You can also message us on WhatsApp for the latest stock list."
     },
     {
-      keys:["timing","time","open","close","working hours","reply time"],
-      ans:"You can message anytime on WhatsApp. Our team will reply as soon as possible with stock, price and delivery details."
-    },
-    {
-      keys:["new arrival","new product","latest product","new stock"],
-      ans:"New arrivals are updated on the website and Instagram. You can also message us on WhatsApp for the latest stock list."
-    },
-    {
-      keys:["flavour","flavor","all flavours","all flavors","assorted"],
-      ans:"Many products come in assorted flavours. Please confirm flavour availability on WhatsApp before placing the order because stock changes."
+      keys:["flavour","flavor","all flavours","all flavors","assorted","mix flavour","mixed flavour","which flavour best","best flavour"],
+      ans:"Many products come in assorted flavours. Popular choices usually include strawberry, orange, blueberry, grape, mango and mixed flavour. Please confirm flavour availability on WhatsApp."
     },
     {
       keys:["sample","sample piece","single piece","trial","try"],
       ans:"PaynCarry mainly deals in carton quantity. For sample/single piece availability, please ask on WhatsApp before ordering."
     },
     {
-      keys:["quality","original","imported","brand","fake"],
-      ans:"PaynCarry focuses on imported and trending carton products. Product photos and details are shown on the website; confirm current batch/details on WhatsApp before final order."
+      keys:["quality","original","imported","brand","fake","is it genuine","scam","trust"],
+      ans:"PaynCarry focuses on imported and trending carton products. You can verify through WhatsApp chat, current stock photos and order confirmation before payment."
     },
     {
-      keys:["price changed","price change","rate update","old price"],
+      keys:["price changed","price change","rate update","old price","price error","wrong price","price not showing"],
       ans:"Prices may change depending on stock and market rate. Website prices are for reference; final price is confirmed on WhatsApp before order."
     },
     {
-      keys:["image","photo","photos","picture","product image"],
-      ans:"Product images are for display/reference. Actual packaging may vary slightly by batch or flavour. Please confirm on WhatsApp if you need exact current stock photo."
+      keys:["image","photo","photos","picture","product image","send photo","real photo","actual photo","current photo","stock photo","image not showing","not showing","blank image"],
+      ans:"Product images are for display/reference. If an image is not showing, refresh the page. For actual current stock photo, message the product name on WhatsApp."
     },
     {
-      keys:["cart not working","button not working","website problem","site issue","error","bug"],
+      keys:["cart not working","button not working","website problem","site issue","error","bug","mobile problem","phone issue","not working on mobile","desktop","pc","laptop"],
       ans:"Sorry for the website issue. Please refresh once. If still not working, send screenshot on WhatsApp and our team will help you place the order manually."
     },
     {
@@ -2266,26 +1812,74 @@ function pcSmartReply(text){
       ans:"PaynCarry only needs basic order details like name, product list, quantity and delivery location to process your order."
     },
     {
-      keys:["popular for shop","what sell","fast moving","fast selling"],
+      keys:["popular for shop","what sell","fast moving","fast selling","popular","recommend","suggest","which product should i buy","what should i buy","confused","help me choose"],
       ans:"Fast-moving products usually include drinks, Juice Drop, gummy candy, popping candy, Oreo Go, Pringles and Frutella jars. Ask on WhatsApp for current demand suggestions."
     },
     {
-      keys:["kids","children","school","party","birthday"],
-      ans:"For kids, school counters or party sales, popular options include gummy candy, jelly candy, popping candy, Juice Drop, marshmallow and toy candy products."
+      keys:["kids","children","school","party","birthday","event","wedding","canteen","college"],
+      ans:"For kids, school counters, parties or canteens, popular options include gummy candy, jelly candy, popping candy, Juice Drop, marshmallow and toy candy products."
     },
     {
-      keys:["profit","margin","resale","selling price"],
-      ans:"Profit margin depends on your selling price, area and demand. For reseller guidance, share your product interest on WhatsApp and our team can suggest fast-moving items."
+      keys:["profit","margin","resale","selling price","how to sell","sell this product","selling idea"],
+      ans:"Profit margin depends on your selling price, area and demand. Display colourful products near billing counter, make combo packs and promote on WhatsApp/Instagram."
     },
     {
       keys:["combo","bundle","mixed carton","mix order"],
       ans:"For combo or mixed order, please message product names and quantities on WhatsApp. Our team will confirm if mixed cartons or bundle options are available."
+    },
+    {
+      keys:["expiry date","mfg","manufacturing","best before","shelf life"],
+      ans:"Expiry/MFG details depend on current stock batch. Please ask on WhatsApp before confirming order and our team can share available batch details."
+    },
+    {
+      keys:["halal","veg","vegetarian","non veg","jain","ingredients","nutrition","allergy","allergic","allergen","kid safe","safe for kids"],
+      ans:"Product dietary, ingredients, allergy and nutrition details can vary by product and batch. Please check packaging or ask our team on WhatsApp before ordering."
+    },
+    {
+      keys:["packing","packaging","carton packing","box packing","how many pieces","pieces in carton","pcs","piece count","inner count","weight","gm","gram","ml","bottle size","can size","carton size","box size","dimensions","weight of carton","carton weight"],
+      ans:"Each product has different carton, inner, size and weight details. Search product name on the website or message us on WhatsApp for exact current stock details."
+    },
+    {
+      keys:["bulk list","price list","catalog","catalogue","product list","rate list","pdf","brochure"],
+      ans:"You can check products on this website. For latest price list/catalogue, send a message on WhatsApp and our team will share available stock details."
+    },
+    {
+      keys:["reseller price","dealer price","wholesale rate","margin price","bulk quantity","large quantity","more carton","multiple carton"],
+      ans:"Dealer/reseller rates depend on quantity and stock. Share your required products and carton quantity on WhatsApp for the best rate."
+    },
+    {
+      keys:["payment proof","screenshot payment","payment screenshot","payment failed","paid but not received","transaction failed","utr","transaction id","reference number"],
+      ans:"After payment, send screenshot/UTR with your name and order details on WhatsApp for faster confirmation."
+    },
+    {
+      keys:["store","shop owner","kirana","general store","small shop product","starter stock","for cafe","cafe product","student business","start business","investment","budget 5000","budget 10000","budget 20000"],
+      ans:"For starter stock, choose mixed fast-moving products instead of only one product. Good options: Juice Drop, gummy candy, popping candy, drinks and snack packs."
+    },
+    {
+      keys:["marketing","promotion","promote","instagram post","poster","banner","reel","status caption","whatsapp status","caption"],
+      ans:"Promotion idea: post product photo with product name, carton price, minimum order and WhatsApp number. Use stories/reels for new arrivals and sale products."
+    },
+    {
+      keys:["website link","site link","link","share product","send product"],
+      ans:"Website: <b>payncarry.eu.cc</b>. You can browse products, add to cart and confirm order on WhatsApp."
+    },
+    {
+      keys:["storage","store product","temperature","keep where","melt","melting","heat","summer","cold storage","refrigerate","fridge"],
+      ans:"Store products in a cool and dry place, away from direct sunlight. Some candy/chocolate/marshmallow items may be sensitive to heat."
+    },
+    {
+      keys:["license","food license","fssai required","license required","barcode","scan","fssai"],
+      ans:"For selling food products, local rules may require proper license/registration. Barcode/FSSAI details, where applicable, are printed on packaging."
+    },
+    {
+      keys:["thank","thanks","ok thanks"],
+      ans:"You're welcome. For quick order or stock confirmation, message PaynCarry on WhatsApp."
+    },
+    {
+      keys:["who are you","about payncarry","what is payncarry","why choose","why payncarry"],
+      ans:"PaynCarry is a bulk carton supplier for imported drinks, candies, snacks and trending products for shops, cafés, resellers and businesses."
     }
   ];
-
-  if(q.includes("hello") || q==="hi" || q==="hey" || q.includes("salam") || q.includes("assalam")){
-    return "Hi bro, welcome to PaynCarry. I can help with products, prices, sale, stock, order, payment, delivery, refund, tracking and WhatsApp support.";
-  }
 
   for(const item of businessAnswers){
     if(item.keys.some(k=>q.includes(k))){
@@ -2293,12 +1887,13 @@ function pcSmartReply(text){
     }
   }
 
+  /* Product browsing logic */
   if(q.includes("sale") || q.includes("lowest") || q.includes("offer")){
     const sale=list.filter(p=>pcCleanText(p.tag).includes("sale") || pcCleanText(p.name).includes("sale"));
     return pcListProducts(sale.length ? sale : list.filter(p=>Number(p.price)<=2000), "Sale / Lowest Price Products");
   }
 
-  if(q.includes("best") || q.includes("popular") || q.includes("top") || q.includes("recommend") || q.includes("suggest")){
+  if(q.includes("best") || q.includes("top")){
     const priority=["hello","fresh","gummy","popo","juice","oreo","pringles","frutella","sandwich","paint"];
     const best=list.filter(p=>priority.some(x=>pcCleanText(p.name).includes(x))).slice(0,8);
     return pcListProducts(best.length?best:list.slice(0,8),"Recommended Products");
@@ -2339,7 +1934,7 @@ function pcSmartReply(text){
     return pcListProducts(list.filter(p=>Number(p.price)>=min && Number(p.price)<=max),`Products between ₹${min} and ₹${max}`);
   }
 
-  const words=q.split(" ").filter(w=>w.length>2 && !["price","product","products","show","give","what","available","please","bro","any","tell","rate","process"].includes(w));
+  const words=q.split(" ").filter(w=>w.length>2 && !["price","product","products","show","give","what","available","please","bro","any","tell","rate","process","id"].includes(w));
   let found=list.filter(p=>{
     const hay=pcCleanText(`${p.name} ${p.tag} ${p.details} ${p.category}`);
     return words.some(w=>hay.includes(w));
@@ -2354,6 +1949,7 @@ function pcSmartReply(text){
 
   return 'I can help with PaynCarry questions like products, price, sale, stock, refund, payment, delivery, tracking, wholesale and order help.<br><br>For special query, message us on WhatsApp and our team will help fast.<br><button class="pc-ai-mini-btn" onclick="window.open(\'https://wa.me/919321319778?text=Hi%20PaynCarry%2C%20I%20need%20help\',\'_blank\')">Ask on WhatsApp</button>';
 }
+
 
 
 </script>
@@ -2426,6 +2022,58 @@ function pcSmartReply(text){
     }
   }, true);
 })();
+</script>
+
+
+<script>
+/* PaynCarry Real AI Connector
+   Works with Netlify Function: /.netlify/functions/payncarry-ai
+   Or set: window.PAYNCARRY_AI_ENDPOINT = "https://your-vercel-or-netlify-domain.com/api/payncarry-ai";
+*/
+window.PAYNCARRY_AI_ENDPOINT = window.PAYNCARRY_AI_ENDPOINT || "/.netlify/functions/payncarry-ai";
+
+async function pcAskRealAI(userText){
+  const endpoint = window.PAYNCARRY_AI_ENDPOINT;
+  const productList = (typeof products !== "undefined" && Array.isArray(products)) ? products : [];
+  const res = await fetch(endpoint, {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      message:userText,
+      products:productList.map(p=>({
+        id:p.id, name:p.name, category:p.category, price:p.price,
+        details:p.details, tag:p.tag
+      })).slice(0,200)
+    })
+  });
+  if(!res.ok){
+    throw new Error("AI endpoint failed");
+  }
+  const data = await res.json();
+  return data.answer || data.message || "Sorry, I could not answer right now. Please contact WhatsApp support.";
+}
+
+/* Override send button: first try real AI, fallback to website smart replies */
+window.pcSendAIMessage = function(){
+  const input=document.getElementById("pcAiInput");
+  const text=input.value.trim();
+  if(!text) return;
+
+  pcAddMsg(text,"user");
+  input.value="";
+  pcAddMsg("Thinking...","bot");
+
+  const messages=document.getElementById("pcAiMessages");
+  const thinking=messages.lastElementChild;
+
+  pcAskRealAI(text).then(answer=>{
+    if(thinking) thinking.remove();
+    pcAddMsg(answer,"bot");
+  }).catch(()=>{
+    if(thinking) thinking.remove();
+    pcAddMsg(pcSmartReply(text),"bot");
+  });
+};
 </script>
 
 </body>
