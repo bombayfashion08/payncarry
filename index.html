@@ -1390,7 +1390,7 @@
 
   <div class="pc-ai-messages advanced" id="pcAiMessages">
     <div class="pc-bot-msg">
-      Hi, I am PaynCarry Ai Chat. Ask me like:<br>
+      Hi, I am PaynCarry Ai Chat. Ask product, sale, stock, order, refund, payment or delivery like:<br>
       <b>“show sale products”</b><br>
       <b>“Juice Drop price”</b><br>
       <b>“products under 2000”</b><br>
@@ -1623,90 +1623,134 @@ function pcSendAIMessage(){
     pcAddMsg(pcSmartReply(text),"bot");
   },420);
 }
+
 function pcSmartReply(text){
   const q=pcCleanText(text);
   const list=pcProducts();
 
-  if(q.includes("hello") || q==="hi" || q==="hey"){
-    return "Hi bro, welcome to PaynCarry. I can help with product prices, sale products, categories, order process, delivery and WhatsApp support.";
+  const businessAnswers = [
+    {
+      keys:["refund","return","replace","exchange","damage","damaged","wrong item","wrong product","broken","leak","leaking"],
+      ans:"Refund/return support is handled on WhatsApp after checking order details. Please share your name, order product, order date, opening video/photo and issue details. Our team will guide you."
+    },
+    {
+      keys:["payment","pay","upi","gpay","google pay","phonepe","paytm","cash","cod","online"],
+      ans:"Payment options can be confirmed on WhatsApp. You can ask for UPI/payment details or Cash on Delivery availability before confirming the order."
+    },
+    {
+      keys:["delivery","courier","shipping","charge","charges","transport","parcel"],
+      ans:"Delivery/courier charges depend on your location, carton quantity and transport option. Add products to cart and confirm on WhatsApp for final delivery charges."
+    },
+    {
+      keys:["track","tracking","order status","status","where is my order"],
+      ans:"To track your order, send your name, WhatsApp number, product name and order date on WhatsApp. Our team will update the status."
+    },
+    {
+      keys:["stock","available","availability","in stock","out of stock"],
+      ans:"Stock changes daily. Send the product name on WhatsApp and our team will confirm current availability before order confirmation."
+    },
+    {
+      keys:["minimum","min order","minimum order","1 carton","single carton"],
+      ans:"Minimum order is usually carton quantity. Product quantity depends on the item. You can confirm exact minimum quantity on WhatsApp."
+    },
+    {
+      keys:["wholesale","bulk","reseller","shop","cafe","dealer","distributor"],
+      ans:"PaynCarry supplies bulk carton products for shops, cafés, resellers and businesses. For wholesale quantity and best price, contact us on WhatsApp."
+    },
+    {
+      keys:["location","address","shop location","where are you","pickup"],
+      ans:"For pickup/location details, please contact PaynCarry on WhatsApp. Our team will share exact details as per order confirmation."
+    },
+    {
+      keys:["instagram","insta","reels","page"],
+      ans:'Instagram: <b>@pay.n.carry</b><br><button class="pc-ai-mini-btn" onclick="window.open(\'https://www.instagram.com/pay.n.carry?igsh=bGI2M3E0MDlqanJv\',\'_blank\')">Open Instagram</button>'
+    },
+    {
+      keys:["contact","phone","number","whatsapp","call","help"],
+      ans:'Contact PaynCarry on WhatsApp: <b>9321319778</b><br><button class="pc-ai-mini-btn" onclick="window.open(\'https://wa.me/919321319778?text=Hi%20PaynCarry%2C%20I%20need%20help%20with%20products%20or%20order\',\'_blank\')">Open WhatsApp</button>'
+    },
+    {
+      keys:["order","buy","cart","checkout","purchase","how to order"],
+      ans:"Order process:<br>1. Select product<br>2. Add carton quantity<br>3. Open cart<br>4. Confirm order on WhatsApp<br>5. Our team confirms stock, payment and delivery charges."
+    },
+    {
+      keys:["timing","time","open","close","working hours"],
+      ans:"You can message anytime on WhatsApp. Our team will reply as soon as possible with stock, price and delivery details."
+    }
+  ];
+
+  if(q.includes("hello") || q==="hi" || q==="hey" || q.includes("salam") || q.includes("assalam")){
+    return "Hi bro, welcome to PaynCarry. I can help with products, prices, sale, stock, order, payment, delivery, refund, tracking and WhatsApp support.";
   }
 
-  if(q.includes("order") || q.includes("buy") || q.includes("cart")){
-    return "Order process:<br>1. Select product<br>2. Add carton quantity<br>3. Open cart<br>4. Confirm on WhatsApp<br><br>Delivery/courier charges are discussed on WhatsApp.";
-  }
-
-  if(q.includes("deliver") || q.includes("courier") || q.includes("shipping")){
-    return "Delivery/courier charges depend on location and order quantity. Add products to cart and confirm on WhatsApp for final delivery details.";
-  }
-
-  if(q.includes("track")){
-    return "For tracking, send your name, WhatsApp number, order product and order date on WhatsApp. Our team will update your order status.";
-  }
-
-  if(q.includes("whatsapp") || q.includes("contact") || q.includes("call")){
-    return 'Contact PaynCarry on WhatsApp: <b>9321319778</b><br><button class="pc-ai-mini-btn" onclick="window.open(\'https://wa.me/919321319778?text=Hi%20PaynCarry%2C%20I%20need%20help%20with%20products%20or%20order\',\'_blank\')">Open WhatsApp</button>';
-  }
-
-  if(q.includes("instagram")){
-    return 'Instagram: <b>@pay.n.carry</b><br><button class="pc-ai-mini-btn" onclick="window.open(\'https://www.instagram.com/pay.n.carry?igsh=bGI2M3E0MDlqanJv\',\'_blank\')">Open Instagram</button>';
+  for(const item of businessAnswers){
+    if(item.keys.some(k=>q.includes(k))){
+      return item.ans;
+    }
   }
 
   if(q.includes("sale") || q.includes("lowest") || q.includes("discount") || q.includes("offer")){
-    const sale=list.filter(p=>pcCleanText(p.tag).includes("sale"));
-    return pcListProducts(sale,"Sale Lowest Price Products");
+    const sale=list.filter(p=>pcCleanText(p.tag).includes("sale") || pcCleanText(p.name).includes("sale"));
+    return pcListProducts(sale.length ? sale : list.filter(p=>Number(p.price)<=2000), "Sale / Lowest Price Products");
   }
 
-  if(q.includes("best") || q.includes("popular") || q.includes("top")){
-    const priority=["hello","fresh","gummy","popo","juice","oreo","pringles","frutella"];
+  if(q.includes("best") || q.includes("popular") || q.includes("top") || q.includes("recommend")){
+    const priority=["hello","fresh","gummy","popo","juice","oreo","pringles","frutella","sandwich","paint"];
     const best=list.filter(p=>priority.some(x=>pcCleanText(p.name).includes(x))).slice(0,8);
     return pcListProducts(best.length?best:list.slice(0,8),"Recommended Products");
   }
 
-  if(q.includes("new") || q.includes("arrival")){
-    return pcListProducts(list.slice(-8).reverse(),"New Arrivals");
+  if(q.includes("new") || q.includes("arrival") || q.includes("latest")){
+    return pcListProducts(list.slice(-10).reverse(),"New Arrivals");
   }
 
-  if(q.includes("drink") || q.includes("drinks")){
-    return pcListProducts(list.filter(p=>pcCleanText(p.category).includes("drink")),"Drink Products");
+  if(q.includes("drink") || q.includes("drinks") || q.includes("can") || q.includes("bottle")){
+    return pcListProducts(list.filter(p=>pcCleanText(p.category).includes("drink") || pcCleanText(p.details).includes("can") || pcCleanText(p.details).includes("bottle")),"Drink Products");
   }
 
-  if(q.includes("candy")){
-    return pcListProducts(list.filter(p=>pcCleanText(p.category).includes("candy")),"Candy Products");
+  if(q.includes("candy") || q.includes("sweet") || q.includes("jelly") || q.includes("gummy")){
+    return pcListProducts(list.filter(p=>pcCleanText(p.category).includes("candy") || pcCleanText(p.name).includes("jelly") || pcCleanText(p.name).includes("gummy")),"Candy Products");
   }
 
-  if(q.includes("snack") || q.includes("snacks") || q.includes("oreo") || q.includes("pringles")){
-    return pcListProducts(list.filter(p=>pcCleanText(p.category).includes("snack")),"Snack Products");
+  if(q.includes("snack") || q.includes("snacks") || q.includes("oreo") || q.includes("pringles") || q.includes("wafer")){
+    return pcListProducts(list.filter(p=>pcCleanText(p.category).includes("snack") || pcCleanText(p.name).includes("oreo") || pcCleanText(p.name).includes("pringles")),"Snack Products");
   }
 
-  const underMatch=q.match(/under\s*(\d+)/) || q.match(/below\s*(\d+)/);
+  const underMatch=q.match(/under\s*(\d+)/) || q.match(/below\s*(\d+)/) || q.match(/less than\s*(\d+)/);
   if(underMatch){
     const max=Number(underMatch[1]);
     return pcListProducts(list.filter(p=>Number(p.price)<=max),`Products under ₹${max}`);
   }
 
-  const aboveMatch=q.match(/above\s*(\d+)/) || q.match(/over\s*(\d+)/);
+  const aboveMatch=q.match(/above\s*(\d+)/) || q.match(/over\s*(\d+)/) || q.match(/more than\s*(\d+)/);
   if(aboveMatch){
     const min=Number(aboveMatch[1]);
     return pcListProducts(list.filter(p=>Number(p.price)>=min),`Products above ₹${min}`);
   }
 
-  const priceMatch=q.match(/(\d+)/);
-  if(q.includes("price") && priceMatch){
-    const amount=Number(priceMatch[1]);
-    const near=list.filter(p=>Math.abs(Number(p.price)-amount)<=200);
-    if(near.length) return pcListProducts(near,`Products near ₹${amount}`);
+  const betweenMatch=q.match(/between\s*(\d+)\s*(and|to)?\s*(\d+)/);
+  if(betweenMatch){
+    const a=Number(betweenMatch[1]), b=Number(betweenMatch[3]);
+    const min=Math.min(a,b), max=Math.max(a,b);
+    return pcListProducts(list.filter(p=>Number(p.price)>=min && Number(p.price)<=max),`Products between ₹${min} and ₹${max}`);
   }
 
-  const words=q.split(" ").filter(w=>w.length>2 && !["price","product","show","give","what","available"].includes(w));
+  const words=q.split(" ").filter(w=>w.length>2 && !["price","product","products","show","give","what","available","please","bro","any","tell","rate"].includes(w));
   let found=list.filter(p=>{
     const hay=pcCleanText(`${p.name} ${p.tag} ${p.details} ${p.category}`);
     return words.some(w=>hay.includes(w));
   });
 
-  if(found.length) return pcListProducts(found,"Found Products");
+  if(found.length){
+    if(q.includes("price") || q.includes("rate") || q.includes("cost")){
+      return pcListProducts(found,"Product Price");
+    }
+    return pcListProducts(found,"Found Products");
+  }
 
-  return "I can help like a Ai Chat for PaynCarry. Try:<br><b>show sale products</b><br><b>Juice Drop price</b><br><b>products under 2000</b><br><b>show snacks</b><br><b>how to order</b>";
+  return 'I can help with PaynCarry business questions like refund, payment, stock, delivery, tracking and products.<br><br>For special query, message us on WhatsApp and our team will help fast.<br><button class="pc-ai-mini-btn" onclick="window.open(\'https://wa.me/919321319778?text=Hi%20PaynCarry%2C%20I%20need%20help\',\'_blank\')">Ask on WhatsApp</button>';
 }
+
 </script>
 
 </body>
